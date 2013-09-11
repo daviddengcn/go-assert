@@ -1,9 +1,9 @@
 package assert
 
-import(
+import (
 	"fmt"
 	"testing"
-	
+
 	"github.com/daviddengcn/go-villa"
 )
 
