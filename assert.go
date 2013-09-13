@@ -105,7 +105,7 @@ func LinesEqual(t *testing.T, name string, act, exp []string) {
 }
 
 /*
-	TextEquals split input strings into lines and call LinesEqual
+	TextEquals splits input strings into lines and calls LinesEqual
 */
 func TextEquals(t *testing.T, name string, act, exp string) {
 	if act == exp {
@@ -116,6 +116,9 @@ func TextEquals(t *testing.T, name string, act, exp string) {
 }
 
 
+/*
+	NoError fails the test if err is not nil
+*/
 func NoError(t *testing.T, err error) bool {
 	if err !=  nil {
 		t.Error(err)
@@ -124,6 +127,10 @@ func NoError(t *testing.T, err error) bool {
 	return true
 }
 
+/*
+	NoErrorf is similar to NoError with an extra format string. The first
+	and only variable in the format string should be %v for error.
+*/
 func NoErrorf(t *testing.T, fmt string, err error) bool {
 	if err !=  nil {
 		t.Errorf(fmt, err)
