@@ -42,7 +42,7 @@ func StringEquals(t *testing.T, name string, act, exp interface{}) {
 	actS, expS := fmt.Sprint(act), fmt.Sprint(exp)
 	if actS != expS {
 		t.Errorf("%s is expected to be %s, but got %v", name,
-			showText(actS), showText(expS))
+			showText(expS), showText(actS))
 	} // if
 }
 
