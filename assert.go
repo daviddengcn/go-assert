@@ -50,10 +50,15 @@ func Equals(t *testing.T, name string, act, exp interface{}) {
 	act and exp are not equal
 */
 func StringEquals(t *testing.T, name string, act, exp interface{}) {
-	actS, expS := fmt.Sprint(act), fmt.Sprint(exp)
+	actS, expS := fmt.Sprintf("%+v", act), fmt.Sprintf("%+v", exp)
 	if actS != expS {
-		t.Errorf("%s%s is expected to be %s, but got %v", assertPos(0), name,
-			showText(expS), showText(actS))
+		if len(actS) + len(expS) < 70 {
+			t.Errorf("%s%s is expected to be %s, but got %v", assertPos(0), name,
+				showText(expS), showText(actS))
+		} else {
+			t.Errorf("%s%s is expected to be\n%s, but got\n%v", assertPos(0), name,
+				showText(expS), showText(actS))
+		}
 	} // if
 }
 
