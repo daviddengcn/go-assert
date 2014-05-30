@@ -1,9 +1,13 @@
+/*
+	Package assert provides some convinient asserting functions on strings, lines, and string sets for testings.
+*/
 package assert
 
 import (
 	"fmt"
 	"path"
 	"runtime"
+	"sort"
 	"strings"
 	"testing"
 
@@ -68,8 +72,13 @@ func StringEquals(t *testing.T, name string, act, exp interface{}) {
 */
 func StrSetEquals(t *testing.T, name string, act, exp villa.StrSet) {
 	if !act.Equals(exp) {
-		t.Errorf("%s%s is expected to be %s, but got %v", assertPos(0), name,
-			showText(fmt.Sprint(exp)), showText(fmt.Sprint(act)))
+		actEls := act.Elements()
+		expEls := exp.Elements()
+		
+		sort.Strings(actEls)
+		sort.Strings(expEls)
+		
+		linesEquals(t, name, actEls, expEls)
 	}
 }
 
