@@ -50,6 +50,33 @@ func Equals(t *testing.T, name string, act, exp interface{}) {
 }
 
 /*
+	NotEquals fails the test and shows error message when act and exp are equal
+*/
+func NotEquals(t *testing.T, act, expected interface{}) {
+	if act == expected {
+		t.Errorf("Is expected not to be %s, but got %v", showText(fmt.Sprint(expected)), showText(fmt.Sprint(act)))
+	}
+}
+
+/*
+	IsTrue fails the test and shows error message when exp are not true
+*/
+func IsTrue(t *testing.T, exp bool) {
+	if exp != true {
+		t.Errorf("unexpectedly got: %v", showText(fmt.Sprint(exp)))
+	}
+}
+
+/*
+	IsFalse fails the test and shows error message when exp are not false
+*/
+func IsFalse(t *testing.T, exp bool) {
+	if exp != false {
+		t.Errorf("unexpectedly got: %v", showText(fmt.Sprint(exp)))
+	}
+}
+
+/*
 	StringEquals fails the test and shows error message when string forms of
 	act and exp are not equal
 */

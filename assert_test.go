@@ -6,6 +6,9 @@ import (
 
 func TestBasic(t *testing.T) {
 	Equals(t, "v", 1, 1)
+	NotEquals(t, 1, 3)
+	IsTrue(t, true)
+	IsFalse(t, false)
 	StringEquals(t, "string", 1, "1")
 	StrSetEquals(t, "strset", nil, nil)
 	LinesEqual(t, "lines", []string{"abc"}, []string{"abc"})
