@@ -52,9 +52,10 @@ func Equals(t *testing.T, name string, act, exp interface{}) {
 /*
 	NotEquals fails the test and shows error message when act and exp are equal
 */
-func NotEquals(t *testing.T, act, expected interface{}) {
-	if act == expected {
-		t.Errorf("Is expected not to be %s, but got %v", showText(fmt.Sprint(expected)), showText(fmt.Sprint(act)))
+func NotEquals(t *testing.T, name string, act, exp interface{}) {
+	if act == exp {
+		t.Errorf("%s%s is expected not to be %s, but got %v", assertPos(0), name,
+			showText(fmt.Sprint(exp)), showText(fmt.Sprint(act)))
 	}
 }
 

@@ -6,7 +6,7 @@ import (
 
 func TestBasic(t *testing.T) {
 	Equals(t, "v", 1, 1)
-	NotEquals(t, 1, 3)
+	NotEquals(t, "v", 1, 4)
 	IsTrue(t, true)
 	IsFalse(t, false)
 	StringEquals(t, "string", 1, "1")
