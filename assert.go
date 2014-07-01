@@ -62,18 +62,18 @@ func NotEquals(t *testing.T, name string, act, exp interface{}) {
 /*
 	IsTrue fails the test and shows error message when exp are not true
 */
-func IsTrue(t *testing.T, exp bool) {
+func IsTrue(t *testing.T, name string, exp bool) {
 	if exp != true {
-		t.Errorf("unexpectedly got: %v", showText(fmt.Sprint(exp)))
+		t.Errorf("%s%s unexpectedly got: %v", assertPos(0), name, showText(fmt.Sprint(exp)))
 	}
 }
 
 /*
 	IsFalse fails the test and shows error message when exp are not false
 */
-func IsFalse(t *testing.T, exp bool) {
+func IsFalse(t *testing.T, name string, exp bool) {
 	if exp != false {
-		t.Errorf("unexpectedly got: %v", showText(fmt.Sprint(exp)))
+		t.Errorf("%s%s unexpectedly got: %v", assertPos(0), name, showText(fmt.Sprint(exp)))
 	}
 }
 
