@@ -121,14 +121,14 @@ func linesEquals(t *testing.T, name string, act, exp []string) {
 		title = fmt.Sprintf("%sexp %d, act %d lines", title, len(exp), len(act))
 	}
 	t.Error(title)
-	t.Log("Difference(exp ---  act +++)")
+	t.Log("Difference(exp ===  act ### change --- +++)")
 	_, matA, matB := ed.EditDistanceFFull(len(exp), len(act),
 		func(iA, iB int) int {
 			sa, sb := exp[iA], act[iB]
 			if sa == sb {
 				return 0
 			}
-			return ed.String(sa, sb)
+			return ed.String(sa, sb) + 1
 		}, func(iA int) int {
 			return len(exp[iA]) + 1
 		}, func(iB int) int {
@@ -137,10 +137,10 @@ func linesEquals(t *testing.T, name string, act, exp []string) {
 	for i, j := 0, 0; i < len(exp) || j < len(act); {
 		switch {
 		case j >= len(act) || i < len(exp) && matA[i] < 0:
-			t.Logf("--- %3d: %s", i+1, showText(exp[i]))
+			t.Logf("=== %3d: %s", i+1, showText(exp[i]))
 			i++
 		case i >= len(exp) || j < len(act) && matB[j] < 0:
-			t.Logf("+++ %3d: %s", j+1, showText(act[j]))
+			t.Logf("### %3d: %s", j+1, showText(act[j]))
 			j++
 		default:
 			if exp[i] != act[j] {
