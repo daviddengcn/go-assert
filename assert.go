@@ -195,3 +195,21 @@ func NoErrorf(t *testing.T, fmtStr string, err error) bool {
 	}
 	return true
 }
+
+/*
+Maps asserts whether a mapping function works as expected.
+*/
+func Maps(t *testing.T, name string, src []interface{}, dst []interface{}, f func(src interface{}) interface{}) bool {
+	succ := true
+	for idx, s := range src {
+		act := f(s)
+		exp := dst[idx]
+		if act != exp {
+			t.Errorf("%s%s is expected to be mapped by %s as %s, but got %v", assertPos(0), showText(fmt.Sprint(s)), name,
+				showText(fmt.Sprint(exp)), showText(fmt.Sprint(act)))
+			succ = false
+		}
+	}
+	
+	return succ
+}

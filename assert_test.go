@@ -12,6 +12,10 @@ func TestBasic(t *testing.T) {
 	StringEquals(t, "string", 1, "1")
 	StrSetEquals(t, "strset", nil, nil)
 	LinesEqual(t, "lines", []string{"abc"}, []string{"abc"})
+	
+	Maps(t, "appendA", []interface{}{"bcd"}, []interface{}{"bcdA"}, func(src interface{}) interface{} {
+		return src.(string) + "A"
+	})
 }
 
 func TestShowText(t *testing.T) {
