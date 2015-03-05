@@ -1,5 +1,7 @@
 /*
 	Package assert provides some convinient asserting functions on strings, lines, and string sets for testings.
+	
+	Return values: true if the assert holds, false otherwise.
 */
 package assert
 
@@ -42,63 +44,74 @@ func assertPos(skip int) string {
 	Equals fails the test and shows error message when act and exp are not
 	equal
 */
-func Equals(t *testing.T, name string, act, exp interface{}) {
+func Equals(t *testing.T, name string, act, exp interface{}) bool {
 	if act != exp {
 		t.Errorf("%s%s is expected to be %s, but got %v", assertPos(0), name,
 			showText(fmt.Sprint(exp)), showText(fmt.Sprint(act)))
+		return false
 	}
+	return true
 }
 
 /*
 	NotEquals fails the test and shows error message when act and exp are equal
 */
-func NotEquals(t *testing.T, name string, act, exp interface{}) {
+func NotEquals(t *testing.T, name string, act, exp interface{}) bool {
 	if act == exp {
 		t.Errorf("%s%s is expected not to be %s, but got %v", assertPos(0), name,
 			showText(fmt.Sprint(exp)), showText(fmt.Sprint(act)))
+		return false
 	}
+	return true
 }
 
 /*
 	IsTrue fails the test and shows error message when exp are not true
 */
-func IsTrue(t *testing.T, name string, exp bool) {
+func IsTrue(t *testing.T, name string, exp bool) bool {
 	if exp != true {
 		t.Errorf("%s%s unexpectedly got: %v", assertPos(0), name, showText(fmt.Sprint(exp)))
+		return false
 	}
+	return true
 }
 
 /*
 	IsFalse fails the test and shows error message when exp are not false
 */
-func IsFalse(t *testing.T, name string, exp bool) {
+func IsFalse(t *testing.T, name string, exp bool) bool {
 	if exp != false {
 		t.Errorf("%s%s unexpectedly got: %v", assertPos(0), name, showText(fmt.Sprint(exp)))
+		return false
 	}
+	return true
 }
 
 /*
 	StringEquals fails the test and shows error message when string forms of
 	act and exp are not equal
 */
-func StringEquals(t *testing.T, name string, act, exp interface{}) {
+func StringEquals(t *testing.T, name string, act, exp interface{}) bool {
 	actS, expS := fmt.Sprintf("%+v", act), fmt.Sprintf("%+v", exp)
 	if actS != expS {
 		if len(actS) + len(expS) < 70 {
 			t.Errorf("%s%s is expected to be %s, but got %v", assertPos(0), name,
 				showText(expS), showText(actS))
+			return false
 		} else {
 			t.Errorf("%s%s is expected to be\n%s, but got\n%v", assertPos(0), name,
 				showText(expS), showText(actS))
+			return false
 		}
-	} // if
+	}
+	return true
 }
 
 /*
 	StrSetEquals fails the test and shows error message when act and exp are
 	not equal string sets.
 */
-func StrSetEquals(t *testing.T, name string, act, exp villa.StrSet) {
+func StrSetEquals(t *testing.T, name string, act, exp villa.StrSet) bool {
 	if !act.Equals(exp) {
 		actEls := act.Elements()
 		expEls := exp.Elements()
@@ -106,13 +119,14 @@ func StrSetEquals(t *testing.T, name string, act, exp villa.StrSet) {
 		sort.Strings(actEls)
 		sort.Strings(expEls)
 		
-		linesEquals(t, name, actEls, expEls)
+		return linesEquals(t, name, actEls, expEls)
 	}
+	return true
 }
 
-func linesEquals(t *testing.T, name string, act, exp []string) {
+func linesEquals(t *testing.T, name string, act, exp []string) bool {
 	if villa.StringSlice(exp).Equals(act) {
-		return
+		return true
 	}
 	title := fmt.Sprintf("%sUnexpected %s: ", assertPos(1), name)
 	if len(exp) == len(act) {
@@ -150,26 +164,28 @@ func linesEquals(t *testing.T, name string, act, exp []string) {
 			i++
 			j++
 		}
-	} // for i, j
+	}
+	
+	return false
 }
 
 /*
 	LinesEqual fails the test and shows the error message and line-to-line
 	differences of the lines when two slices of strings are not equal
 */
-func LinesEqual(t *testing.T, name string, act, exp []string) {
-	linesEquals(t, name, act, exp)
+func LinesEqual(t *testing.T, name string, act, exp []string) bool {
+	return linesEquals(t, name, act, exp)
 }
 
 /*
 	TextEquals splits input strings into lines and calls LinesEqual
 */
-func TextEquals(t *testing.T, name string, act, exp string) {
+func TextEquals(t *testing.T, name string, act, exp string) bool {
 	if act == exp {
-		return
+		return true
 	}
 	acts, exps := strings.Split(act, "\n"), strings.Split(exp, "\n")
-	LinesEqual(t, name, acts, exps)
+	return LinesEqual(t, name, acts, exps)
 }
 
 
